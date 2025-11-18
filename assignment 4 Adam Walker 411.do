@@ -32,4 +32,7 @@ sum frprtpl eduyrs, detail
 * Agreement of Fairness of Political Access: Mean: 2.68, Median: 3, Min: 1, Max: 5, Std. dev: 1.04, Skew: 0.14
 
 
-*Alternative Variables: Finances(grspnum), Rural vs Urban, Sex(gndr), Is party in power/favourability of current party in power,  
+
+
+*Alternative Variables: Finances(grspnum), Rural vs Urban, Sex(gndr), Is party in power/favourability of current party in power,  domicile
+
