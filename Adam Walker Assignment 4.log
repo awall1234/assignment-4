@@ -1,0 +1,235 @@
+----------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\adamj\Downloads\Adam Walker Assignment 4.log
+  log type:  text
+ opened on:  21 Nov 2025, 23:45:16
+
+. do "C:\Users\adamj\Downloads\assignment 4 Adam Walker 411.do"
+
+. *Assignment 4
+. 
+. *Adam Walker
+. *POL S 411
+. *Dr Snagovsky
+. *Nov 21 2025
+. 
+. clear all
+
+. cd "C:\Users\adamj\Downloads"
+C:\Users\adamj\Downloads
+
+. use "ESS9e02.dta"
+
+. 
+. 
+. 
+. * 2 RESEARCH
+. 
+. * A) Question: Does the number of years that someone attended schooling influence how much they believe their country allows everyone 
+> a fair chance to participate in politics?
+. 
+. * B) Null: The number of years of schooling has no impact on ones belief regarding how much their country allows everyone to participa
+> te in politics.
+. 
+. * C) Altertantive: Those with more years of schooling will believe that their country allows more fair participation than those who do
+> n't have as much schooling. This is because those barriers that affect how much schooling someone can do can overlap with how much the
+> y can participate in politics. Those with less barriers to participate may not realize the struggles others face in participating. For
+>  example: those with the time and money to afford school may be more likely to have money to donate to campaigns and time to invest in
+>  understanding politics. 
+. 
+. 
+. * 3 SUMMARIZE I AND D VAR
+. 
+. sum frprtpl eduyrs, detail
+
+      Political system in country ensures everyone fair
+                chance to participate in poli
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            1              1
+ 5%            1              1
+10%            1              1       Obs              44,474
+25%            2              1       Sum of wgt.      44,474
+
+50%            3                      Mean           2.676238
+                        Largest       Std. dev.      1.041244
+75%            3              5
+90%            4              5       Variance       1.084189
+95%            4              5       Skewness       .1417581
+99%            5              5       Kurtosis       2.423129
+
+           Years of full-time education completed
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            3              0
+ 5%            7              0
+10%            8              0       Obs              46,408
+25%           11              0       Sum of wgt.      46,408
+
+50%           12                      Mean           12.89482
+                        Largest       Std. dev.      4.078194
+75%           16             50
+90%           18             51       Variance       16.63166
+95%           20             60       Skewness        .483457
+99%           23             60       Kurtosis       6.403733
+
+. 
+. * Agreement of Fairness of Political Access: Mean: 2.68, Median: 3, Min: 1, Max: 5, Std. dev: 1.04, Skew: 0.14
+. 
+. * Education Years: Mean: 12.89, Median: 12, Min: 0, Max: 60, Std. dev: 4.07, Skew: 0.48
+. 
+. 
+. 
+. * 4 CONTROL VARS
+. 
+. * A) Age (agea, continuous): I selected this because as people get older and retire they may have more free time to engage in politics
+> .
+. 
+. * B) Domicil (domicil, ordinal): It may be easier to participate in politics in a big city because rallies, poll stations or politicia
+> n's offices may be closer.
+. 
+. * D)  Religion (rlgdnm, categorical): It could be that some religions enjoy better political standing with the government and therefor
+> e feel treated fairily and assume others do as well. 
+. 
+. * D) i) Gender (gndr, binary): Men have historically enjoyed exclusive or preferential access to politics and may not realize areas an
+> d ways in which women are still excluded. 
+. *       ii) Voted (vote, binary): If they voted in the last federal election they likely have some access to participate and may feel 
+> that if they had the chance others did too.
+. replace vote = . if vote == 3
+(3,517 real changes made, 3,517 to missing)
+
+. *       iii) I chose these two to interact because I want to see if having voted or not affects changes based on someones gender, do men
+. feel as though the system is more fair regardless of if they voted or not.
+. 
+. * In a multiple regression between my variables I expect to find that education play a significant roll in how fair someone thinks the
+> ir system is. I do think that if a person is male or older that will substantially increase their likelyhood to think their system is 
+> fair. I am curious how religion will play out but am unsure of it's potential effects. I think those in big cities will believe that t
+> he system is fairer and that this will be a signicant variable. With respects to the interaction I expect men who voted will have high
+> er levels of thinking the system is fair than all other categories, with women who didn't as the lowest.
+. 
+. 
+. * 5 REGRESSION 
+. 
+. regress frprtpl eduyrs agea domicil rlgdnm i.gndr##i.vote
+
+      Source |       SS           df       MS      Number of obs   =    23,850
+-------------+----------------------------------   F(7, 23842)     =    196.54
+       Model |  1409.07786         7  201.296837   Prob > F        =    0.0000
+    Residual |  24418.6161    23,842  1.02418489   R-squared       =    0.0546
+-------------+----------------------------------   Adj R-squared   =    0.0543
+       Total |   25827.694    23,849  1.08296759   Root MSE        =     1.012
+
+------------------------------------------------------------------------------
+     frprtpl | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      eduyrs |   .0497028   .0017158    28.97   0.000     .0463396    .0530659
+        agea |   .0018688   .0004031     4.64   0.000     .0010787    .0026589
+     domicil |   .0359346   .0055849     6.43   0.000     .0249879    .0468813
+      rlgdnm |   .0255768   .0050901     5.02   0.000     .0155998    .0355538
+             |
+        gndr |
+     Female  |  -.1106523   .0146526    -7.55   0.000    -.1393724   -.0819322
+             |
+        vote |
+         No  |  -.3269307   .0263768   -12.39   0.000     -.378631   -.2752304
+             |
+   gndr#vote |
+  Female#No  |   .0669656   .0341159     1.96   0.050     .0000963    .1338349
+             |
+       _cons |   1.835968   .0454507    40.39   0.000     1.746882    1.925055
+------------------------------------------------------------------------------
+
+. 
+. 
+. * 6 INTERPRETATION
+. 
+. * A) All variables are statistically significant, female#no has a p value of 0.050 so it is exactly on our max threshold to consider s
+> omething significant
+. 
+. * B) Note, for each interpretation we hold all other variables constant. For every additional year of education some has they move ~ .
+> 05 categories (on the likert scale) towards believing their states system allows for fair political participation. For each additional
+>  year of life someone has lived they move ~0.002 categories closer to believing their system is fair. Each one unit increase someone h
+> as going from living on a farm to living in a big city they will believe their system if fairer by ~0.035 of a category on the fairnes
+> s scale. For what religion someone identifies with the coefficient is rather useless because there is no meaningful relationship betwe
+> en the numbers associated with each religion. 
+. 
+. *Being a female who voted, as compared to a man who voted reduces the amount you think your system is fair by ~0.11 of a category. Hav
+> ing not voted (and being male), compared having (and being male) voted also reduces the amount one thinks their system allows for fair
+>  participation by ~0.33 of a category. 
+. 
+. * C) The interaction between being a woman and not having voted is ~0.067 this means that women who didn't vote believe there system i
+> s slightly more fair than those women who did vote. 
+. 
+. 
+. *7 KERNAL DENSITY
+. 
+. predict r, resid
+(23,236 missing values generated)
+
+. kdensity r, normal name("Kdensity")
+
+. graph save "Kdensity" "C:\Users\adamj\Downloads\Kdensity.pdf"
+file C:\Users\adamj\Downloads\Kdensity.pdf saved as .gph format
+
+. 
+. * I see 4 large, 2 mediuim and 1 small peak. This indicates sub populations within my data but this is explained by my dependent varia
+> ble being a likert scale and not continuous. My model is relatively symetrical which is good. 
+. 
+. *8 RVFPLOT
+. rvfplot , name("RVFplot")
+
+. graph save "RVFplot" "C:\Users\adamj\Downloads\RVFplot.pdf"
+file C:\Users\adamj\Downloads\RVFplot.pdf saved as .gph format
+
+. 
+. * There are five lines, this is typical for a likert scale and they are all straight. I would note that overall my residuals are centre
+> d a bit above 0 meaning the model is sometimes under predicting values and there are some outliers as fitted values increase.
+. 
+. *9 BREUSH-PAGAN
+. estat hettest
+
+Breusch–Pagan/Cook–Weisberg test for heteroskedasticity 
+Assumption: Normal error terms
+Variable: Fitted values of frprtpl
+
+H0: Constant variance
+
+    chi2(1) =  17.88
+Prob > chi2 = 0.0000
+
+. 
+. * Our model is statistically significant with a p value of 0.000 and has heteroskedasticiity. It infact has a lot of heteroskedasticii
+> ty as the test statistic is 17.88. This is not immediatly worrying as my d-var is likert and it makes sense for residuals to be cluste
+> red around each whole number answer.
+. 
+. 
+. *10 INFLATION FACTOR
+. vif
+
+    Variable |       VIF       1/VIF  
+-------------+----------------------
+      eduyrs |      1.15    0.872208
+        agea |      1.15    0.870991
+     domicil |      1.05    0.953570
+      rlgdnm |      1.03    0.966522
+      2.gndr |      1.23    0.813267
+      2.vote |      2.46    0.405773
+   gndr#vote |
+        2 2  |      2.66    0.376307
+-------------+----------------------
+    Mean VIF |      1.53
+
+. 
+. *My main variables have low inflation factors meaning they are not very correlated with eachother. As expected my interaction terms ha
+> ve slightly higher factors but still withing a low-moderate range. 
+. 
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\adamj\Downloads\Adam Walker Assignment 4.log
+  log type:  text
+ closed on:  21 Nov 2025, 23:45:36
+----------------------------------------------------------------------------------------------------------------------------------------
